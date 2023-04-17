@@ -6,35 +6,60 @@ import mysql.connector
 
 
 
-def connect(username,passwordHash):
+def connect():
     try:
-        mydb=mysql.connector.connect(host="localhost",user=username,password=passwordHash,database="password-manager")
+        mydb=mysql.connector.connect(host="localhost",user='ewan-jc',password='Randomguy007!',database="password-manager")
         return mydb
     except:
         raise Exception("Unable to connect to database")
     
-def insertPasswords(username,passwordHash,userEmail,password,domainURL,domainName):
-    db=connect(username,passwordHash)
-    cur=db.cursor()
-    query=("""INSERT INTO credentials (username, email, password,domainURL,domainName) VALUES (%s,%s,%s,%s,%s)""")
-    values=(username,userEmail,password,domainURL,domainName)
-    cur.execute(query,values)
-    db.close()
+def insertPasswords(username,userEmail,password,domainURL,domainName):
+    try:
+        db=connect(username)
+        cur=db.cursor()
+        query=("""INSERT INTO credentials (username, email, password,domainURL,domainName) VALUES (%s,%s,%s,%s,%s)""")
+        values=(username,userEmail,password,domainURL,domainName)
+        cur.execute(query,values)
+        db.close()
+    except:
+        raise Exception
 
 
-def findPasswords(username,passwordHash,domainName):
-    db=connect(username,passwordHash)
-    cur=db.cursor()
-    query=("""SELECT password FROM credentials (WHERE domainName= %s AND username= %s)""")
-    domain=(domainName,username)
-    password=cur.execute(query,domain)
-    return password
+def findPasswords(username,domainName):
+    try:
+
+        db=connect()
+        cur=db.cursor()
+        query=("""SELECT email,password FROM credentials (WHERE domainName= %s)""")
+        domain=(domainName)
+        password=cur.execute(query,domain)
+        db.close()
+        return password
+    except:
+        raise Exception
 
 
-def allUserCredentials(username,passwordHash):
-    db=connect(username,passwordHash)
-    cur=db.cursor()
-    query=("""SELECT * FROM credentials WHERE username= %s""")
-    value=username
-    credentials=cur.execute(query,value)
-    return credentials 
+def allUserCredentials():
+    try:
+        db=connect()
+        cur=db.cursor()
+        query=("""SELECT * FROM credentials""")
+        cur.execute(query)
+        credentials=cur.fetchall()
+        db.close()
+        return credentials 
+    except:
+        raise Exception
+    
+
+def selectAllDomainNames():
+    try:
+        db=connect()
+        cur=db.cursor()
+        cur.execute("""SELECT domainName FROM credentials""")
+        domainNames=cur.fetchall()
+        db.close()
+        return domainNames
+    except:
+        raise Exception
+        

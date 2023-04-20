@@ -1,31 +1,27 @@
 import mysql.connector
 
 
-
-#connect to the mysql database
-
-
-
 def connect():
     try:
-        mydb=mysql.connector.connect(host="localhost",user='ewan-jc',password='Randomguy007!',database="password-manager")
+        mydb=mysql.connector.connect(host="localhost",user='ewan-jc',password='Randomguy007!',database="password_manager")
         return mydb
     except:
         raise Exception("Unable to connect to database")
     
-def insertPasswords(username,userEmail,password,domainURL,domainName):
+def insertPasswords(accountCredentials):
     try:
-        db=connect(username)
+        db=connect()
         cur=db.cursor()
-        query=("""INSERT INTO credentials (username, email, password,domainURL,domainName) VALUES (%s,%s,%s,%s,%s)""")
-        values=(username,userEmail,password,domainURL,domainName)
+        query=("""INSERT INTO credentials(id,email, password,domainURL,domainName) VALUES (DEFAULT,%s,%s,%s,%s)""")
+        values=(accountCredentials['e-mail'],accountCredentials['Password'],accountCredentials['Domain-URL'],accountCredentials['Domain-Name'])
         cur.execute(query,values)
+        db.commit()
         db.close()
     except:
         raise Exception
 
 
-def findPasswords(username,domainName):
+def findPasswords(domainName):
     try:
 
         db=connect()

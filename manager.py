@@ -17,8 +17,7 @@ def login(username,password):
     if storedPassword ==None:
         print("There is no user associated with that username")
     else:
-        check=checkMasterPwd(password,storedPassword)
-        if check==True:
+        if checkMasterPwd(password,storedPassword):
             print("Login Successful!")
             return True
         else:
@@ -28,29 +27,31 @@ def login(username,password):
 
 def main():
     
-    while True:
-        username=input("Please enter your username")
-        masterPassword=input("Please enter your password")
-        if not login():
-            continue
-        else:
-            break
+    #while True:
+    #    username=input("Please enter your username")
+    #    masterPassword=input("Please enter your password")
+    #   if not login():
+    #        continue
+    #    else:
+    #        break
     
-    usrChoice=interface.optionMenu()
-    match usrChoice:
-        case 1:
-            accountInfo=interface.credentialForm()
-            database.insertPasswords(username,accountInfo['e-mail'],accountInfo['Password'],accountInfo['Domain-URL'],accountInfo['Domain-Name'])
-        case 2:
-            credentials=database.allUserCredentials()
-            interface.displayAllCredentials(credentials)
-        case 3:
-            domains=database.selectAllDomainNames()
-            interface.displayDomains(domains)
-            selectedDomain=input()
-            record=database.findPasswords(username,selectedDomain)
-            interface.displayCredential(record)
-        case default:
-            sys.exit()
+    usrChoice=int(interface.optionMenu())
+    if usrChoice==1:
+        accountInfo=interface.credentialForm()
+        database.insertPasswords(accountInfo)
+    
+    elif usrChoice== 2:
+        credentials=database.allUserCredentials()
+        interface.displayAllCredentials(credentials)
+    
+    elif usrChoice== 3:
+        domains=database.selectAllDomainNames()
+        interface.displayDomains(domains)
+        selectedDomain=input()
+        record=database.findPasswords(selectedDomain)
+        interface.displayCredential(record)
+    
+    else:
+        sys.exit()
 
-interface.credentialForm()
+main()

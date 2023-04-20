@@ -33,4 +33,5 @@ def displayAllCredentials(allCredentials):
         print(x)
 
 def displayCredential(credential):
+    raise NotImplementedError
     ...

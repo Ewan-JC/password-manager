@@ -3,7 +3,7 @@ import mysql.connector
 
 def connect():
     try:
-        mydb=mysql.connector.connect(host="localhost",user='ewan-jc',password='Randomguy007!',database="password_manager")
+        mydb=mysql.connector.connect(host="localhost",user='username',password='password',database="password_manager")
         return mydb
     except:
         raise Exception("Unable to connect to database")

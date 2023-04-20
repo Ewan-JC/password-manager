@@ -16,6 +16,8 @@ Password storage:
 Database management:
   Implement delete feature to remove credentials from the db
   
+  Add validation to the credentials form to check if the email and domain url formatting are correct (Regex??)
+  
 
 
 Later Tasks:

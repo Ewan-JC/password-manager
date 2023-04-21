@@ -3,7 +3,7 @@ import mysql.connector
 
 def connect():
     try:
-        mydb=mysql.connector.connect(host="localhost",user='username',password='password',database="password_manager")
+        mydb=mysql.connector.connect(host="localhost",user='ewan-jc',password='Randomguy007!',database="password_manager")
         return mydb
     except:
         raise Exception("Unable to connect to database")
@@ -26,11 +26,23 @@ def findPasswords(domainName):
 
         db=connect()
         cur=db.cursor()
-        query=("""SELECT email,password FROM credentials (WHERE domainName= %s)""")
+        query=("""SELECT id,email,password FROM credentials (WHERE domainName= %s)""")
         domain=(domainName)
         password=cur.execute(query,domain)
         db.close()
         return password
+    except:
+        raise Exception
+
+def deletePasswords(id):
+    try:
+        db=connect()
+        cur=db.cursor()
+        query=("""DELETE FROM credentials WHERE id=%s""")
+        
+        cur.execute(query,id)
+        db.commit()
+        db.close()
     except:
         raise Exception
 

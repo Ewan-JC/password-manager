@@ -26,14 +26,11 @@ def login(username,password):
 
 
 def main():
-    
-    #while True:
+   # username=input("Please enter your username")
+    #masterPassword=input("Please enter your password")
+    #while not login(username,masterPassword):
     #    username=input("Please enter your username")
     #    masterPassword=input("Please enter your password")
-    #   if not login():
-    #        continue
-    #    else:
-    #        break
     
     usrChoice=int(interface.optionMenu())
     if usrChoice==1:

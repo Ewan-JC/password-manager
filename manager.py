@@ -1,8 +1,7 @@
 import sys
 import interface
-import database
 import hashing
-
+import database_revamp
 
 def checkMasterPwd(mPassword,mHash):
     userHash=hashing.hashPassword(mPassword)
@@ -26,26 +25,27 @@ def login(username,password):
 
 
 def main():
-   # username=input("Please enter your username")
-    #masterPassword=input("Please enter your password")
+    username=input("Please enter your username")
+    masterPassword=input("Please enter your password")
     #while not login(username,masterPassword):
     #    username=input("Please enter your username")
     #    masterPassword=input("Please enter your password")
+    db=database_revamp.Database(username,masterPassword)
     
     usrChoice=int(interface.optionMenu())
     if usrChoice==1:
         accountInfo=interface.credentialForm()
-        database.insertPasswords(accountInfo)
+        db.insertPasswords(accountInfo)
     
     elif usrChoice== 2:
-        credentials=database.allUserCredentials()
+        credentials=db.allUserCredentials()
         interface.displayAllCredentials(credentials)
     
     elif usrChoice== 3:
-        domains=database.selectAllDomainNames()
+        domains=db.selectAllDomainNames()
         interface.displayDomains(domains)
         selectedDomain=input()
-        record=database.findPasswords(selectedDomain)
+        record=db.findPasswords(selectedDomain)
         interface.displayCredential(record)
     
     else:

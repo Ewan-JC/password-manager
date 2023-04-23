@@ -1,9 +1,6 @@
 import mysql.connector
 
 
-
-
-
 class Database():
     def __init__(self,username,password):
         self.dbUser=username
@@ -28,6 +25,7 @@ class Database():
             db.close()
         except:
             raise Exception
+        
     def findPasswords(self,domainName):
         try:
             db=self.connect()
